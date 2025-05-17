@@ -1,0 +1,4 @@
+1.maven的依赖范围如何指定？
+<scope>test<scope>表示junit类只能在测试程序中使用
+常见取值：
+compile(默认),test,provided,runtime
