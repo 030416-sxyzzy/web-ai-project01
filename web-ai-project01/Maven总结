@@ -1,4 +1,72 @@
-1.maven的依赖范围如何指定？
+1.maven概述
+(1)是一个项目管理和构建工具，基于项目对象模型(pom)的概念，通过一小段信息描述信息来管理项目的构建
+一小段信息指的是pom.xml中的项目对象模型(pom)和依赖管理模型(dependency)（从仓库里查找jar包）
+仓库：maven的仓库是用来管理和存储jar包的
+本地仓库：mvn-repo->私服（远程仓库）->中央仓库
+(2)作用：方便的依赖管理，标准的项目构建流程，统一的项目结构。
+构建生命周期：Maven构建了一套标准化流程（编译->测试->打包->发布)
+
+2.IDEA集成maven
+什么是maven坐标：
+资源（jar）的唯一标识，
+（1）通过该坐标唯一定位资源位置
+（2）使用坐标来定义项目或引入项目中的依赖
+maven坐标组成部分
+groupId：组织名称（域名反写）
+artifactId：项目名称
+version：项目版本号
+版本分类：
+SNAPSHOT：功能不稳定，尚处于开发中的版本
+RELEASE：功能趋于稳定，当前更新停止，可以用于发行的版本
+
+3.依赖管理
+（1）依赖配置
+<!--配置依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.1.4</version>
+<!--排除依赖-->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.micrometer</groupId>
+                    <artifactId>micrometer-observation</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+     </dependencies>
+
+（2）生命周期
+*clean:清理工作
+*default:核心工作
+compile：编译
+test：测试
+package：打包（jar)
+install:安装项目到本地仓库
+*site:生成报告，发布站点
+注:在同一套生命周期中，当运行后面的阶段，前面的阶段都会运行。
+
+4.单元测试
+（1）快速入门
+*junit单元测试的优点
+·测试代码与应用程序代码分开，便于维护
+·可以自动生成测试报告
+·一个测试方法执行失效，不会影响其他测试方法。
+*命名规范
+类：xxTest
+方法：public void xxxx(){....}
+（2）断言
+*为什么要使用断言？
+单元测试运行方法不报错，不代表业务方法没问题。通过断言，可以检测方法运行结果是否和预期一致，从而判断业务方法的正确性。
+Assertions.xxxx()
+（3）常见注解
+参数化测试：@ParameterizedTest+@ValueSource
+初始化操作：@BeforeEach,@BeforeAll
+释放对应的资源：@AfterEach,@AfterAll
+（4）依赖范围
+*maven的依赖范围如何指定？
 <scope>test<scope>表示junit类只能在测试程序中使用
-常见取值：
+*常见取值：
 compile(默认),test,provided,runtime
+
